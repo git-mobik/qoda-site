@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neon Fireworks ULTRA</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="sky"></canvas>
+
+  <div id="hud">
+    <h1>NEON FIREWORKS</h1>
+    <p class="tagline">Click &middot; Drag to paint &middot; Double-click mega &middot; Right-click special</p>
+    <div id="stats">
+      <div class="stat"><span class="label">Launched</span><span id="count" class="value">0</span></div>
+      <div class="stat"><span class="label">Combo</span><span id="combo" class="value">0</span></div>
+      <div class="stat"><span class="label">Particles</span><span id="pcount" class="value">0</span></div>
+      <div class="stat"><span class="label">FPS</span><span id="fps" class="value">60</span></div>
+    </div>
+  </div>
+
+  <div id="controls">
+    <button id="btnAuto" class="ctrl">AUTO</button>
+    <button id="btnSound" class="ctrl active">SOUND</button>
+    <button id="btnBurst" class="ctrl">BURST</button>
+    <button id="btnAttract" class="ctrl">ATTRACT</button>
+    <button id="btnConfetti" class="ctrl">CONFETTI</button>
+    <button id="btnShot" class="ctrl">SHOT</button>
+    <button id="btnFull" class="ctrl">FULL</button>
+    <button id="btnSettings" class="ctrl">SETTINGS</button>
+  </div>
+
+  <div id="panel" class="hidden">
+    <h3>SETTINGS</h3>
+    <div class="row">
+      <label>THEME</label>
+      <div id="themeButtons"></div>
+    </div>
+    <div class="row">
+      <label>QUALITY</label>
+      <div id="qualityButtons"></div>
+    </div>
+    <div class="row">
+      <label>GRAVITY</label>
+      <input type="range" id="gravity" min="0" max="2" step="0.1" value="1" />
+    </div>
+    <div class="row">
+      <label>PARTICLE SIZE</label>
+      <input type="range" id="psize" min="0.5" max="2" step="0.1" value="1" />
+    </div>
+    <div class="row">
+      <label>TRAIL FADE</label>
+      <input type="range" id="fade" min="0.05" max="0.5" step="0.01" value="0.22" />
+    </div>
+    <div class="row btns">
+      <button id="btnReset" class="ctrl small">RESET STATS</button>
+      <button id="btnClose" class="ctrl small">CLOSE</button>
+    </div>
+  </div>
+
+  <div id="help">
+    <h3>HOW TO PLAY</h3>
+    <ul>
+      <li><b>Click</b> &mdash; launch a firework</li>
+      <li><b>Drag</b> &mdash; paint fireworks trail</li>
+      <li><b>Double-click</b> &mdash; mega burst</li>
+      <li><b>Right-click</b> &mdash; special shape</li>
+      <li><b>Space</b> &mdash; auto show &middot; <b>B</b> burst &middot; <b>A</b> attract</li>
+      <li><b>C</b> confetti &middot; <b>S</b> screenshot &middot; <b>F</b> fullscreen</li>
+      <li><b>H</b> toggle help</li>
+    </ul>
+    <button id="btnHelpClose" class="ctrl small">GOT IT</button>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

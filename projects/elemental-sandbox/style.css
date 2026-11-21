@@ -1,0 +1,160 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  overflow: hidden;
+  background: #05060f;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  color: #e0e0f0;
+  user-select: none;
+  touch-action: none;
+}
+
+#sand {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  cursor: crosshair;
+  display: block;
+}
+
+#toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  background: rgba(12, 14, 28, 0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(120, 140, 200, 0.2);
+  z-index: 10;
+  flex-wrap: wrap;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.mat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #c8d0e0;
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, transform 0.08s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.mat:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.mat:active { transform: scale(0.96); }
+
+.mat.active {
+  background: rgba(120, 160, 255, 0.18);
+  border-color: rgba(140, 180, 255, 0.65);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(120, 160, 255, 0.3);
+}
+
+.mat .sw {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  flex-shrink: 0;
+}
+
+.sep {
+  flex: 0 0 1px;
+  align-self: stretch;
+  margin: 3px 4px;
+  background: rgba(120, 140, 200, 0.22);
+}
+
+.brush-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  color: #8899bb;
+  padding: 0 4px;
+}
+
+.brush-label input[type=range] {
+  width: 80px;
+  accent-color: #7aa0ff;
+  cursor: pointer;
+}
+
+#brushVal {
+  width: 16px;
+  text-align: right;
+  color: #b8c8e8;
+  font-weight: 700;
+}
+
+.action {
+  background: rgba(120, 160, 255, 0.14);
+  border: 1px solid rgba(140, 180, 255, 0.4);
+  color: #b8c8ff;
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.12s;
+  white-space: nowrap;
+}
+
+.action:hover { background: rgba(120, 160, 255, 0.26); }
+
+.action.on {
+  background: rgba(255, 200, 80, 0.2);
+  border-color: rgba(255, 210, 110, 0.6);
+  color: #ffe0a0;
+}
+
+.action.clear {
+  background: rgba(255, 100, 100, 0.15);
+  border-color: rgba(255, 120, 120, 0.4);
+  color: #ffb0b0;
+}
+
+.action.clear:hover { background: rgba(255, 100, 100, 0.28); }
+
+#hint {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  color: rgba(160, 180, 220, 0.4);
+  z-index: 9;
+  pointer-events: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .mat { font-size: 0.66rem; padding: 5px 8px; }
+  .brush-label input[type=range] { width: 60px; }
+  #hint { font-size: 0.6rem; letter-spacing: 1px; }
+}

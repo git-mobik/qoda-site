@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#08070f">
+<title>Echo Maze</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="game-wrap">
+  <div id="canvas-holder">
+    <canvas id="game" aria-label="Echo Maze board"></canvas>
+    <div id="pause-tag">PAUSED</div>
+    <div id="toast" aria-live="polite"></div>
+    <div id="mobile-controls" aria-hidden="true">
+      <div id="joy-base"><div id="joy-knob"></div></div>
+      <button id="dash-btn" type="button">DASH</button>
+    </div>
+  </div>
+
+  <div id="hud">
+    <div class="stat"><span class="label">LEVEL</span><span id="level">1</span></div>
+    <div class="stat"><span class="label">SCORE</span><span id="score">0</span></div>
+    <div class="stat"><span class="label">ORBS</span><span id="orbs">0/0</span></div>
+    <div class="stat"><span class="label">TIME</span><span id="timer">0.0</span></div>
+    <div class="stat danger"><span class="label">GHOSTS</span><span id="ghosts">1</span></div>
+    <div class="stat dash"><span class="label">DASH</span><span id="dash">READY</span></div>
+  </div>
+
+  <button id="settings-btn" type="button" aria-label="Settings">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"></path></svg>
+  </button>
+
+  <div id="overlay" class="show">
+    <div class="panel">
+      <div class="screen" id="screen-title">
+        <h1 class="title">ECHO MAZE</h1>
+        <p class="tag">Your past is hunting you.</p>
+        <p class="desc">Collect every orb, then reach the exit. A ghost replays your every move a moment later. Touch it and the run ends.</p>
+        <p class="desc"><b>Tips:</b> Chain orbs fast for a COMBO multiplier. Skim past a ghost for a NEAR MISS bonus. Grab the <b>shield</b> and <b>time warp</b> pickups on later levels.</p>
+        <div class="keys">
+          <span><b>WASD</b> / <b>Arrows</b> move</span>
+          <span><b>Shift</b> dash</span>
+          <span><b>Space</b> pause</span>
+          <span><b>R</b> restart</span>
+        </div>
+        <button id="startBtn" type="button">START</button>
+        <p class="hint">Touch: drag the pad to steer, tap DASH to blink.</p>
+      </div>
+
+      <div class="screen" id="screen-complete" hidden>
+        <h1 class="win">LEVEL CLEAR</h1>
+        <p class="tag win-tag">The echo fades. For now.</p>
+        <div class="stats-row">
+          <div class="big-stat"><span class="bs-label">TIME</span><span id="c-time">0.0</span></div>
+          <div class="big-stat"><span class="bs-label">ORBS</span><span id="c-orbs">0/0</span></div>
+          <div class="big-stat"><span class="bs-label">SCORE</span><span id="c-score">0</span></div>
+        </div>
+        <div id="c-stars" class="stars">★★★</div>
+        <button id="nextBtn" type="button">NEXT LEVEL</button>
+      </div>
+
+      <div class="screen" id="screen-over" hidden>
+        <h1 class="lose">CAUGHT</h1>
+        <p class="tag lose-tag" id="o-reason">Your echo caught you.</p>
+        <div class="stats-row">
+          <div class="big-stat"><span class="bs-label">LEVEL</span><span id="o-level">1</span></div>
+          <div class="big-stat"><span class="bs-label">SCORE</span><span id="o-score">0</span></div>
+          <div class="big-stat"><span class="bs-label">BEST</span><span id="o-best">0</span></div>
+        </div>
+        <button id="retryBtn" type="button">RETRY</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="settings-panel" class="hidden" role="dialog" aria-label="Settings">
+    <h2>SETTINGS</h2>
+    <label class="toggle"><span>Sound</span><input type="checkbox" id="set-sound"></label>
+    <label class="toggle"><span>Motion effects</span><input type="checkbox" id="set-motion"></label>
+    <label class="toggle"><span>Haptics</span><input type="checkbox" id="set-haptics"></label>
+    <button id="settings-close" type="button">DONE</button>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

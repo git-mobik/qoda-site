@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Qoda — AI Coding Agent + Desktop IDE</title>
+  <meta name="description" content="Qoda is a desktop IDE with an autonomous coding agent: it reads your files, writes code, runs commands and finishes the task. No API keys." />
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="googlebot" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0e1014" />
+  <link rel="icon" href="assets/favicon-16.png" sizes="16x16" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="glow glow-a" aria-hidden="true"></div>
+  <div class="glow glow-b" aria-hidden="true"></div>
+
+  <header class="nav" id="top">
+    <a class="brand" href="#top">
+      <img src="assets/qoda-mark.png" alt="" width="28" height="28" />
+      <span>Qoda</span>
+      <span class="brand-tag">v2.2.1</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#projects">Projects</a>
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#safety">Safety</a>
+      <a href="#requirements">Requirements</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-sm" href="#download">Get the app</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="pill reveal"><span class="dot"></span> Windows 10 / 11 · private preview</p>
+      <h1 class="reveal">The coding agent that lives <em>inside</em> your IDE.</h1>
+      <p class="lede reveal">
+        Qoda is a desktop IDE with an autonomous agent. Give it a task — it reads your files,
+        writes the code, runs the commands and only stops when the job is done.
+        No API keys, no per-token billing: it drives your own DeepSeek session.
+      </p>
+      <div class="hero-actions reveal">
+        <a class="btn" href="#download">Download for Windows</a>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
+      </div>
+      <p class="hero-note reveal">Free while in preview · works with your existing DeepSeek account</p>
+
+      <div class="app-window reveal" aria-hidden="true">
+        <div class="win-bar">
+          <span class="traffic"><i></i><i></i><i></i></span>
+          <span class="win-title">qoda-ide — src/agent/loop.ts</span>
+          <span class="win-tabs"><b>loop.ts</b><span>App.tsx</span><span>styles.css</span></span>
+        </div>
+        <div class="win-body">
+          <aside class="win-side">
+            <p class="side-head">EXPLORER</p>
+            <ul class="tree">
+              <li class="dir">src</li>
+              <li class="file active">agent/loop.ts</li>
+              <li class="file">agent/tools.ts</li>
+              <li class="file">chat/Panel.tsx</li>
+              <li class="file">editor/monaco.ts</li>
+              <li class="dir">electron</li>
+              <li class="dir">skills</li>
+            </ul>
+          </aside>
+          <div class="win-code">
+            <pre><code><span class="ln">1</span><span class="kw">export async function</span> <span class="fn">runTask</span>(task: <span class="ty">string</span>) {
+<span class="ln">2</span>  <span class="kw">const</span> plan = <span class="kw">await</span> agent.<span class="fn">think</span>(task);
+<span class="ln">3</span>  <span class="kw">for</span> (<span class="kw">const</span> step <span class="kw">of</span> plan.steps) {
+<span class="ln">4</span>    <span class="kw">const</span> result = <span class="kw">await</span> tools.<span class="fn">run</span>(step);
+<span class="ln">5</span>    <span class="kw">if</span> (result.blocked) <span class="kw">await</span> <span class="fn">askUser</span>(result.reason);
+<span class="ln">6</span>  }
+<span class="ln">7</span>  <span class="kw">return</span> agent.<span class="fn">final</span>();
+<span class="ln">8</span>}</code></pre>
+          </div>
+          <aside class="win-chat">
+            <p class="side-head">AGENT</p>
+            <div class="bubble user">Add dark mode to settings</div>
+            <div class="bubble agent">
+              <span class="tool">✎ write_file · App.css</span>
+              <span class="tool">▶ run_command · npm test</span>
+              <span class="tool ok">✓ 24 checks passed</span>
+              Settings now follow a theme toggle.
+            </div>
+            <div class="typing"><i></i><i></i><i></i></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <h2 class="reveal">Live projects</h2>
+      <p class="section-lede reveal">Small games and experiments built inside Qoda — each one runs right here in the browser.</p>
+      <div class="pgrid">
+        <a class="project reveal" href="projects/3d-racing/" target="_blank" rel="noopener">
+          <span class="thumb thumb-racing" aria-hidden="true"><i></i></span>
+          <span class="p-body">
+            <span class="p-tag">WebGL · arcade</span>
+            <span class="p-title">APEX DRIVE — 3D Racing</span>
+            <span class="p-desc">Realtime racing with a procedurally generated track and drift physics.</span>
+          </span>
+          <span class="p-open">Open</span>
+        </a>
+        <a class="project reveal" href="projects/crystal-world/" target="_blank" rel="noopener">
+          <span class="thumb thumb-crystal" aria-hidden="true"><i></i></span>
+          <span class="p-body">
+            <span class="p-tag">3D runner</span>
+            <span class="p-title">Aether Run — Crystal World</span>
+            <span class="p-desc">Endless run through a glowing crystal landscape.</span>
+          </span>
+          <span class="p-open">Open</span>
+        </a>
+        <a class="project reveal" href="projects/echo-maze/" target="_blank" rel="noopener">
+          <span class="thumb thumb-maze" aria-hidden="true"><i></i></span>
+          <span class="p-body">
+            <span class="p-tag">Puzzle</span>
+            <span class="p-title">Echo Maze</span>
+            <span class="p-desc">Find the exit when only sound echoes reveal the walls.</span>
+          </span>
+          <span class="p-open">Open</span>
+        </a>
+        <a class="project reveal" href="projects/elemental-sandbox/" target="_blank" rel="noopener">
+          <span class="thumb thumb-element" aria-hidden="true"><i></i></span>
+          <span class="p-body">
+            <span class="p-tag">Sandbox</span>
+            <span class="p-title">Elemental Sandbox</span>
+            <span class="p-desc">Mix fire, water, ice and wind — watch the reactions spread.</span>
+          </span>
+          <span class="p-open">Open</span>
+        </a>
+        <a class="project reveal" href="projects/neon-fireworks/" target="_blank" rel="noopener">
+          <span class="thumb thumb-fireworks" aria-hidden="true"><i></i></span>
+          <span class="p-body">
+            <span class="p-tag">Particles</span>
+            <span class="p-title">Neon Fireworks ULTRA</span>
+            <span class="p-desc">Choreographed particle fireworks you can launch yourself.</span>
+          </span>
+          <span class="p-open">Open</span>
+        </a>
+        <a class="project reveal" href="projects/pubg-3d/" target="_blank" rel="noopener">
+          <span class="thumb thumb-arena" aria-hidden="true"><i></i></span>
+          <span class="p-body">
+            <span class="p-tag">Shooter</span>
+            <span class="p-title">PUBG 3D — Arena</span>
+            <span class="p-desc">Low-poly battle royale arena with loot, zones and bots.</span>
+          </span>
+          <span class="p-open">Open</span>
+        </a>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <h2 class="reveal">Everything runs from one window</h2>
+      <p class="section-lede reveal">An agent and a real editor, sharing the same workspace.</p>
+      <div class="grid">
+        <article class="card reveal">
+          <h3>Autonomous agent loop</h3>
+          <p>Plans, batches tool calls, verifies its own work and reports back with a final answer — up to 45 minutes per task.</p>
+        </article>
+        <article class="card reveal">
+          <h3>29 built-in tools</h3>
+          <p>Read and write files, run commands, search the codebase, open URLs, take screenshots, manage todos.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Real IDE shell</h3>
+          <p>Monaco editor, file explorer, tabs, integrated terminal, git panel, search and command palette.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Checkpoints &amp; diff review</h3>
+          <p>Every edit is backed up. Review a side-by-side diff and revert a file or a whole step in one click.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Skills for your stack</h3>
+          <p>Load focused playbooks (React, Electron, tests, docs…) so the agent follows your conventions instead of guessing.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Rate-limit aware</h3>
+          <p>Humanised typing and paced sends keep long tasks alive instead of tripping the provider's limits.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="how" class="section">
+      <h2 class="reveal">How a task flows</h2>
+      <ol class="steps">
+        <li class="reveal"><span>1</span><div><h3>Describe the task</h3><p>“Add a dark mode toggle and update the tests.” Qoda reads the workspace first.</p></div></li>
+        <li class="reveal"><span>2</span><div><h3>Agent works locally</h3><p>It edits files and runs commands in your project — each step checkpointed, each command visible.</p></div></li>
+        <li class="reveal"><span>3</span><div><h3>You stay in control</h3><p>Permission prompts, access levels and an internet switch decide what the agent may touch.</p></div></li>
+        <li class="reveal"><span>4</span><div><h3>Review and ship</h3><p>Diff the changes, revert anything, keep the parts you like.</p></div></li>
+      </ol>
+    </section>
+
+    <section id="safety" class="section">
+      <h2 class="reveal">Built to be supervised</h2>
+      <div class="grid grid-3">
+        <article class="card reveal">
+          <h3>Access levels</h3>
+          <p>Read-only, ask-before-write, or full access. Switch any time; sensitive paths stay blocked.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Internet gate</h3>
+          <p>One chip turns network tools off. With it off, the agent asks before reaching out.</p>
+        </article>
+        <article class="card reveal">
+          <h3>No keys to leak</h3>
+          <p>No API credential is stored — Qoda uses the browser session you signed in with.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="requirements" class="section">
+      <h2 class="reveal">Runs on</h2>
+      <ul class="req reveal">
+        <li><b>Windows 10 / 11</b> (x64)</li>
+        <li><b>DeepSeek account</b> — you sign in once in the browser Qoda opens</li>
+        <li><b>≈150 MB</b> installer · no admin rights needed</li>
+        <li><b>Internet</b> for the agent; your files stay on disk</li>
+      </ul>
+    </section>
+
+    <section id="download" class="section download">
+      <div class="dl-card reveal">
+        <img src="assets/qoda-mark.png" alt="Qoda" width="44" height="44" />
+        <div>
+          <h2>Qoda 2.2.1 for Windows</h2>
+          <p>Private preview build · installer is shared directly with invited users.</p>
+        </div>
+        <a class="btn" href="#" id="dl-link">Request access</a>
+      </div>
+    </section>
+
+    <section id="faq" class="section">
+      <h2 class="reveal">Questions</h2>
+      <div class="faq reveal">
+        <details><summary>Do I need an API key?</summary><p>No. Qoda drives the DeepSeek web session you already have, so there is nothing to paste and nothing to bill per token.</p></details>
+        <details><summary>Where does my code go?</summary><p>Your files stay on your machine. Only the context the agent sends to the chat leaves your computer — the same content you would type yourself.</p></details>
+        <details><summary>Can I undo the agent's edits?</summary><p>Yes. Every write is checkpointed, and the diff view reverts either a single file or all changes from a step.</p></details>
+        <details><summary>Is it open source?</summary><p>The repository is private for now. This page is an unlisted preview — please don't share the link.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="brand"><img src="assets/qoda-mark.png" alt="" width="22" height="22" /><span>Qoda</span></div>
+    <p>© 2026 Qoda · Unlisted preview · Last build: v2.2.1</p>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

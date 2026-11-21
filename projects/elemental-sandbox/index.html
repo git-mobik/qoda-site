@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Elemental Sandbox</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="toolbar">
+    <button data-mat="1" class="mat active"><span class="sw" style="background:#e8c547"></span>Sand</button>
+    <button data-mat="2" class="mat"><span class="sw" style="background:#3a7bd5"></span>Water</button>
+    <button data-mat="3" class="mat"><span class="sw" style="background:#74747c"></span>Stone</button>
+    <button data-mat="7" class="mat"><span class="sw" style="background:#8b5a2b"></span>Wood</button>
+    <button data-mat="8" class="mat"><span class="sw" style="background:#4ade80"></span>Plant</button>
+    <button data-mat="4" class="mat"><span class="sw" style="background:#ff781e"></span>Fire</button>
+    <div class="sep"></div>
+    <button data-mat="9" class="mat"><span class="sw" style="background:#ff5a14"></span>Lava</button>
+    <button data-mat="11" class="mat"><span class="sw" style="background:#463a2e"></span>Oil</button>
+    <button data-mat="10" class="mat"><span class="sw" style="background:#96f03c"></span>Acid</button>
+    <button data-mat="12" class="mat"><span class="sw" style="background:#aadcf5"></span>Ice</button>
+    <button data-mat="13" class="mat"><span class="sw" style="background:#5f584e"></span>Powder</button>
+    <button data-mat="14" class="mat"><span class="sw" style="background:#a5a8b4"></span>Metal</button>
+    <button data-mat="15" class="mat"><span class="sw" style="background:#96cde1"></span>Glass</button>
+    <button data-mat="16" class="mat"><span class="sw" style="background:#484644"></span>Ash</button>
+    <div class="sep"></div>
+    <button data-mat="0" class="mat"><span class="sw" style="background:#222"></span>Eraser</button>
+    <label class="brush-label">
+      <span>Brush</span>
+      <input type="range" id="brush" min="2" max="24" value="6" />
+      <span id="brushVal">6</span>
+    </label>
+    <button id="pause" class="action">Pause</button>
+    <button id="clear" class="action clear">Clear</button>
+  </div>
+  <canvas id="sand"></canvas>
+  <div id="hint">Drag to paint · watch elements react</div>
+  <script src="script.js"></script>
+</body>
+</html>

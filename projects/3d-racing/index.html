@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0e0f12" />
+  <meta name="description" content="APEX DRIVE — a professional 3D racing game in your browser." />
+  <title>APEX DRIVE — 3D Racing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Damage / nitro vignette layer -->
+  <div id="vignette"></div>
+
+  <!-- Start Menu -->
+  <div id="menu" class="overlay">
+    <div class="menu-box menu-wide">
+      <div class="title-block">
+        <div class="title-rule"></div>
+        <div class="title-eyebrow">APEX HIGHWAY · PRO EDITION</div>
+        <h1>APEX<span>DRIVE</span></h1>
+        <p class="subtitle">An open-road 3D race. Thread traffic, bank coins, hold your line.</p>
+        <div class="title-strip"><span class="dot"></span>START LINE</div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="race">🏁 RACE</button>
+        <button class="tab-btn" data-tab="garage">🚗 GARAGE</button>
+        <button class="tab-btn" data-tab="tuning">🔧 TUNING</button>
+        <button class="tab-btn" data-tab="records">🏆 RECORDS</button>
+        <button class="tab-btn" data-tab="controls">🎮 CONTROLS</button>
+        <button class="tab-btn" data-tab="powerups">⚡ POWER-UPS</button>
+      </div>
+
+      <!-- RACE TAB -->
+      <div class="tab-panel active" id="tab-race">
+        <div class="setting-block">
+          <div class="setting-title">🗺️ SELECT TRACK</div>
+          <p class="hint" style="margin:0 0 10px;">Har track ka apna mahaul — City, Jungle ya Highway. Ek hi game me alag alag raste!</p>
+          <div class="track-grid" id="trackGrid">
+            <div class="track-card active" data-track="highway">
+              <div class="track-icon">🛣️</div>
+              <div class="track-name">HIGHWAY</div>
+              <div class="track-desc">Open road, street lamps &amp; rolling hills</div>
+            </div>
+            <div class="track-card" data-track="city">
+              <div class="track-icon">🌆</div>
+              <div class="track-name">CITY</div>
+              <div class="track-desc">Dense skyscrapers, neon glow, concrete</div>
+            </div>
+            <div class="track-card" data-track="jungle">
+              <div class="track-icon">🌴</div>
+              <div class="track-name">JUNGLE</div>
+              <div class="track-desc">Thick foliage, misty green, wild track</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-block">
+          <div class="setting-title">🏁 SELECT DIFFICULTY</div>
+          <div class="difficulty-grid" id="difficultyGrid">
+            <div class="diff-card" data-diff="easy">
+              <div class="diff-icon">🌱</div>
+              <div class="diff-name">ROOKIE</div>
+              <div class="diff-desc">Relaxed pace, forgiving traffic</div>
+              <div class="diff-meta">+10% coins</div>
+            </div>
+            <div class="diff-card active" data-diff="normal">
+              <div class="diff-icon">🔥</div>
+              <div class="diff-name">RACER</div>
+              <div class="diff-desc">Balanced speed &amp; challenge</div>
+              <div class="diff-meta">Standard</div>
+            </div>
+            <div class="diff-card" data-diff="hard">
+              <div class="diff-icon">💀</div>
+              <div class="diff-name">APEX</div>
+              <div class="diff-desc">Fast traffic, ruthless damage</div>
+              <div class="diff-meta">+50% score</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-block">
+          <label class="setting-title" for="stabilitySlider">🎮 STEERING STABILITY — <span id="stabilityValue">Balanced</span></label>
+          <input type="range" id="stabilitySlider" min="0" max="100" value="50" />
+          <div class="stability-ends"><span>ASSIST</span><span>RAW</span></div>
+        </div>
+      </div>
+
+      <!-- GARAGE TAB -->
+      <div class="tab-panel" id="tab-garage">
+        <div class="setting-block">
+          <div class="setting-title">🚗 SELECT YOUR MACHINE</div>
+          <div class="garage-grid" id="garageGrid"></div>
+        </div>
+        <div class="setting-block">
+          <div class="setting-title">🎨 PAINT SCHEME</div>
+          <div class="paint-grid" id="paintGrid"></div>
+        </div>
+      </div>
+
+            <!-- TUNING TAB -->
+      <div class="tab-panel" id="tab-tuning">
+        <div class="setting-block">
+          <div class="setting-title">🔧 PERFORMANCE TUNING</div>
+          <p class="hint" style="margin:0 0 10px;">Race karke CREDITS kamao aur apni machine permanently upgrade karo. Ye upgrades har race me lagte hain \u2014 difficulty aur gaadi ke upar.</p>
+          <div class="tune-balance">CREDITS <span id="tuneCredits">0</span></div>
+          <div id="upgradeList"></div>
+        </div>
+      </div>
+
+      <!-- RECORDS TAB -->
+      <div class="tab-panel" id="tab-records">
+        <div class="setting-block">
+          <div class="setting-title">🏆 PERSONAL BEST</div>
+          <div class="records-grid">
+            <div class="record-row"><span class="rec-label">High Score</span><span class="rec-val" id="recHigh">0</span></div>
+            <div class="record-row"><span class="rec-label">Best Lap</span><span class="rec-val" id="recLap">--</span></div>
+            <div class="record-row"><span class="rec-label">Coins Collected</span><span class="rec-val" id="recCoins">0</span></div>
+            <div class="record-row"><span class="rec-label">Total Distance</span><span class="rec-val" id="recDist">0 m</span></div>
+            <div class="record-row"><span class="rec-label">Total Races</span><span class="rec-val" id="recRaces">0</span></div>
+          </div>
+        </div>
+        <div class="setting-block">
+          <div class="setting-title">🥇 ACHIEVEMENTS</div>
+          <div class="achieve-list" id="achieveList"></div>
+        </div>
+      </div>
+
+      <!-- CONTROLS TAB -->
+      <div class="tab-panel" id="tab-controls">
+        <div class="setting-block">
+          <div class="setting-title">🎮 KEYBOARD CONTROLS</div>
+          <div class="ctrl-grid">
+            <div><kbd>W</kbd><kbd>↑</kbd></div><div>Accelerate</div>
+            <div><kbd>S</kbd><kbd>↓</kbd></div><div>Brake / Reverse</div>
+            <div><kbd>A</kbd><kbd>D</kbd><kbd>←</kbd><kbd>→</kbd></div><div>Steer</div>
+            <div><kbd>Shift</kbd></div><div>Nitro Boost</div>
+            <div><kbd>C</kbd></div><div>Change Camera</div>
+            <div><kbd>F</kbd></div><div>Toggle Headlights</div>
+            <div><kbd>R</kbd></div><div>Reset Car</div>
+            <div><kbd>M</kbd></div><div>Mute Sound</div>
+            <div><kbd>N</kbd></div><div>Day / Night</div>
+            <div><kbd>Esc</kbd></div><div>Pause</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- POWER-UPS TAB -->
+      <div class="tab-panel" id="tab-powerups">
+        <div class="setting-block">
+          <div class="setting-title">⚡ ROAD PICKUPS</div>
+          <p class="hint" style="margin:0 0 10px;">Road pe glowing pickups collect karo. Har ek alag boost deta hai!</p>
+          <div class="pu-legend">
+            <div class="pu-card"><span class="icon">⚡</span><span class="name">Nitro</span><span class="desc">Nitro bar instantly full</span></div>
+            <div class="pu-card"><span class="icon">🛡️</span><span class="name">Shield</span><span class="desc">5 sec damage proof</span></div>
+            <div class="pu-card"><span class="icon">❤️</span><span class="name">Repair</span><span class="desc">+30 HP instantly</span></div>
+            <div class="pu-card"><span class="icon">🔥</span><span class="name">Overdrive</span><span class="desc">4 sec +25% top speed</span></div>
+            <div class="pu-card"><span class="icon">💥</span><span class="name">Combo</span><span class="desc">+5 combo stack</span></div>
+          </div>
+        </div>
+        <div class="setting-block">
+          <div class="setting-title">💨 NEAR MISS BONUS</div>
+          <p class="hint" style="margin:0;">Traffic ke paas se bina takraaye nikalo — bonus score + combo!</p>
+        </div>
+      </div>
+
+      <div class="start-bar">
+        <button id="startBtn">START ENGINE</button>
+        <span class="start-note">Traffic se bacho, coins collect karo, combo banao, aur best score set karo.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pause -->
+  <div id="pauseScreen" class="overlay hidden">
+    <div class="menu-box">
+      <h1>PAUSED</h1>
+      <p class="subtitle">Take a breather</p>
+      <div class="pause-stats" id="pauseStats"></div>
+      <div class="pause-actions">
+        <button id="resumeBtn">RESUME</button>
+        <button id="quitBtn" class="btn-ghost">QUIT TO MENU</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HUD -->
+  <div id="hud" class="hidden">
+    <div id="minimapWrap">
+      <canvas id="minimapCanvas" width="160" height="160"></canvas>
+      <div id="trackTag">APEX HIGHWAY</div>
+    </div>
+
+    <div class="hud-top">
+      <div id="lapBox"><span id="lapTime">0.00</span>s</div>
+      <div id="bestBox"><span id="bestTime">--</span>s</div>
+      <div id="distBox"><span id="distVal">0</span>m</div>
+      <div id="coinBox">💰 <span id="coinVal">0</span></div>
+      <div id="scoreBox"><span id="scoreVal">0</span></div>
+      <div id="healthBox"><span id="healthVal">100</span></div>
+    </div>
+
+    <div id="rankBadge"><span id="rankVal">1</span><small>RANK</small></div>
+    <div id="comboBadge" class="hidden"><span id="comboVal">x1</span><small>COMBO</small></div>
+
+    <div id="nitroWrap">
+      <div id="nitroLabel">NITRO</div>
+      <div id="nitroBar"><div id="nitroFill"></div></div>
+    </div>
+
+    <div id="speedo">
+      <canvas id="speedoCanvas" width="220" height="220"></canvas>
+      <div id="speedText"><span id="speedVal">0</span><small>KM/H</small></div>
+      <div id="gearText">N</div>
+    </div>
+
+    <div id="speedLines"></div>
+    <div id="popup"></div>
+
+    <div id="controlsHint">
+      <div><kbd>W</kbd> Gas</div>
+      <div><kbd>S</kbd> Brake</div>
+      <div><kbd>A</kbd><kbd>D</kbd> Steer</div>
+      <div><kbd>Shift</kbd> Nitro</div>
+      <div><kbd>C</kbd> Camera</div>
+      <div><kbd>Esc</kbd> Pause</div>
+    </div>
+
+    <div id="camIndicator">Camera: Chase</div>
+
+    <div id="touchControls" class="hidden">
+      <div class="touch-top">
+        <button class="touch-icon-btn" id="touchCamera" aria-label="Change camera" title="Camera">📷</button>
+        <button class="touch-icon-btn" id="touchPause" aria-label="Pause" title="Pause">❚❚</button>
+      </div>
+      <div class="touch-side touch-left">
+        <button class="touch-btn steer-btn" data-key="ArrowLeft" aria-label="Steer left">◀</button>
+        <button class="touch-btn steer-btn" data-key="ArrowRight" aria-label="Steer right">▶</button>
+      </div>
+      <div class="touch-side touch-right">
+        <button class="touch-btn touch-brake" data-key="ArrowDown" aria-label="Brake">▼</button>
+        <button class="touch-btn touch-gas" data-key="ArrowUp" aria-label="Accelerate">▲</button>
+        <button class="touch-btn touch-nitro" data-key="ShiftLeft" aria-label="Nitro boost">⚡</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="countdown" class="hidden">3</div>
+
+  <div id="achieveToast" class="hidden"></div>
+
+  <div id="gameOverScreen" class="overlay hidden">
+    <div class="menu-box">
+      <h1 id="goTitle">GAME OVER</h1>
+      <p class="subtitle" id="goSub">Your car is wrecked</p>
+      <div class="go-rank" id="goRankBadge">🏁</div>
+      <div class="go-stats">
+        <div>Score <span id="goScore">0</span></div>
+        <div>Coins <span id="goCoins">0</span></div>
+        <div>Distance <span id="goDist">0</span> m</div>
+        <div>Top Speed <span id="goTopSpeed">0</span> km/h</div>
+        <div>High Score <span id="goHigh">0</span></div>
+      </div>
+      <div class="pause-actions">
+        <button id="restartBtn">RACE AGAIN</button>
+        <button id="menuBtn" class="btn-ghost">MENU</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="loading" class="overlay hidden">
+    <div class="menu-box">
+      <h1>LOADING</h1>
+      <div class="load-bar"><div class="load-fill"></div></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js"></script>
+  <script src="script.js"></script>
+  <script src="pro.js"></script>
+  <script src="upgrade.js"></script><script src="patch.js"></script><script src="final-fix.js"></script><script src="tuning.js"></script><script src="smooth-mix-fix.js"></script>
+</body>
+</html>

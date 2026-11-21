@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aether Run — Crystal World</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="scene"></div>
+<header><div class="brand"><span class="brand-mark">◈</span><div>AETHER RUN<small>THE FLOATING WILDS</small></div></div><button id="sound" class="icon-button" aria-label="Toggle sound">SOUND OFF</button></header>
+<div id="hud"><div class="mission"><span class="eyebrow">MISSION · LEVEL <b id="level">1</b></span><strong>Restore the gateway</strong><span>Find every crystal. Beat the guardian. Reach the portal.</span><div class="progress"><i id="progress"></i></div><div class="mission-bottom"><span><b id="count">0</b> / <b id="count-total">6</b> CRYSTALS</span><span id="time">00:00</span></div></div><div class="vitals"><div class="health-heading"><span class="eyebrow">PLAYER HEALTH</span><strong id="health-value">100 / 100</strong></div><div id="health-bar" role="progressbar" aria-label="Player health" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" data-level="high"><i id="health-fill"></i></div><span id="status">Crystals heal +15 HP.</span></div></div>
+<div id="toast" role="status"></div>
+<div id="boss"><div class="boss-title"><span class="eyebrow">ISLAND GUARDIAN</span><span id="boss-name">WARD - 3 HITS</span></div><div class="progress"><i id="boss-fill"></i></div></div>
+<div id="ability" class="ready"><div><kbd>F</kbd><strong>WIND DASH</strong><span id="dash-state">READY</span></div><div class="progress"><i id="dash-fill"></i></div><small>A quick escape. Brief protection.</small></div>
+<div id="ability2" class="ready"><div><kbd>R</kbd><strong>CRYSTAL PULSE</strong><span id="pulse-state">READY</span></div><div class="progress"><i id="pulse-fill"></i></div><small>Shockwave. Stuns nearby sentinels.</small></div>
+<div id="buffs"><span class="buff" id="buff-shield">Shield <b></b></span><span class="buff" id="buff-speed">Speed <b></b></span><span class="buff" id="buff-magnet">Magnet <b></b></span></div>
+<div id="radar"><canvas id="map" width="150" height="150"></canvas><span>ISLAND SCANNER</span></div>
+<footer><div><kbd>W A S D</kbd> Move <kbd>SPACE</kbd> Jump <kbd>SHIFT</kbd> Sprint <kbd>R</kbd> Pulse</div><div><kbd>Q / E</kbd> Orbit <span class="desktop-hint">· Drag to look</span> <kbd>ESC</kbd> Pause</div><button id="pause" class="icon-button">PAUSE</button></footer>
+<div id="overlay"><div class="intro"><span class="eyebrow">A SMALL WORLD. A BIG ADVENTURE.</span><h1>Find your<br><em>way home.</em></h1><p>Five floating isles above the clouds. Lost crystals everywhere.<br>One gateway waiting to wake up.</p><div class="tags"><span>EXPLORE IN 3D</span><span>DODGE SENTINELS</span><span>RESTORE THE PORTAL</span></div><button id="play">Begin adventure <span>↗</span></button><small>Keyboard + mouse · No download needed</small></div></div>
+<div id="error" hidden></div>
+<script type="module" src="game.js"></script>
+</body></html>

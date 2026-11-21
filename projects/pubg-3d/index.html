@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0e13" />
+  <title>PUBG 3D — Battle Royale Arena</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230b0e13'/%3E%3Ctext x='32' y='44' font-size='36' font-family='Arial' font-weight='bold' fill='%23f7c04a' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ══════════════ MAIN MENU ══════════════ -->
+  <div id="menu" class="screen menu-screen">
+    <div class="menu-shell">
+      <section class="brand-side">
+        <div class="eyebrow"><span class="pulse-dot"></span> TACTICAL SURVIVAL · WAVE MODE</div>
+        <h1 class="logo">PUBG <span>3D</span></h1>
+        <div class="logo-sub">BATTLE ROYALE ARENA</div>
+        <p class="lede">
+          Drop into the Erangel training compound. Loot the buildings, stack cash and
+          hold the line against hostile squads that get smarter every wave.
+        </p>
+
+        <div class="best-row">
+          <div class="best-chip"><span id="bestWave">0</span><small>BEST WAVE</small></div>
+          <div class="best-chip"><span id="bestScore">0</span><small>HIGH SCORE</small></div>
+          <div class="best-chip"><span id="bestKills">0</span><small>MOST KILLS</small></div>
+        </div>
+
+        <button id="startBtn" class="btn primary big">
+          <span class="btn-glow"></span>
+          <span>DROP IN</span>
+          <kbd>ENTER</kbd>
+        </button>
+        <div class="menu-note">Kills se cash kamao · Har wave ke baad shop · Airdrop mat chhodo</div>
+        <div class="touch-note">📱 Left stick move · right side look · FIRE shoot · ADS scope · E loot · MED heal · NADE throw</div>
+      </section>
+
+      <aside class="brief-panel">
+        <div class="panel-head"><span>OPERATOR BRIEF</span><b>v3.0</b></div>
+        <div class="ctrl-list">
+          <div class="ctrl"><span class="keys"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span><span>Move / strafe</span></div>
+          <div class="ctrl"><span class="keys"><kbd>MOUSE</kbd></span><span>Aim</span></div>
+          <div class="ctrl"><span class="keys"><kbd>LMB</kbd></span><span>Fire</span></div>
+          <div class="ctrl"><span class="keys"><kbd>RMB</kbd></span><span>Aim down sights</span></div>
+          <div class="ctrl"><span class="keys"><kbd>SHIFT</kbd></span><span>Sprint</span></div>
+          <div class="ctrl"><span class="keys"><kbd>CTRL</kbd></span><span>Crouch</span></div>
+          <div class="ctrl"><span class="keys"><kbd>SPACE</kbd></span><span>Jump</span></div>
+          <div class="ctrl"><span class="keys"><kbd>R</kbd></span><span>Reload</span></div>
+          <div class="ctrl"><span class="keys"><kbd>E</kbd></span><span>Pick up loot</span></div>
+          <div class="ctrl"><span class="keys"><kbd>G</kbd></span><span>Throw grenade</span></div>
+          <div class="ctrl"><span class="keys"><kbd>H</kbd></span><span>Use medkit</span></div>
+          <div class="ctrl"><span class="keys"><kbd>T</kbd></span><span>Use armor plate</span></div>
+          <div class="ctrl"><span class="keys"><kbd>F</kbd></span><span>Flashlight</span></div>
+          <div class="ctrl"><span class="keys"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd><kbd>5</kbd><kbd>6</kbd><kbd>7</kbd><kbd>8</kbd></span><span>Switch weapon</span></div>
+          <div class="ctrl"><span class="keys"><kbd>ESC</kbd></span><span>Pause</span></div>
+        </div>
+
+        <div class="settings">
+          <label class="range-row" for="sensRange">
+            <span>MOUSE SENS</span>
+            <input id="sensRange" type="range" min="40" max="220" value="100" />
+            <b id="sensVal">1.00×</b>
+          </label>
+          <button id="muteBtn" class="btn ghost small">🔊 SOUND ON</button>
+        </div>
+
+        <div class="brief-foot">
+          <span class="tag">8 WEAPONS</span>
+          <span class="tag">5 ENEMY TYPES</span>
+          <span class="tag">AIRDROP LOOT</span>
+          <span class="tag">NIGHT OPS</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ══════════════ HUD ══════════════ -->
+  <div id="hud" class="hidden">
+    <canvas id="compass" width="920" height="58"></canvas>
+    <div id="airdropCompass" class="hidden">🪂</div>
+
+    <div class="hud-top-left">
+      <div class="bar hp"><div id="hpFill"></div><span id="hpText">100</span><i>HP</i></div>
+      <div class="bar armor"><div id="armorFill"></div><span id="armorText">0</span><i>ARMOR</i></div>
+      <div class="bar stamina"><div id="staminaFill"></div></div>
+      <div id="statusChips"></div>
+    </div>
+
+    <div class="hud-top-right">
+      <div class="stat wave"><span>WAVE</span><b id="waveNum">1</b></div>
+      <div class="stat hostiles"><span>HOSTILES</span><b id="enemyLeft">0</b></div>
+      <div class="stat cash"><span>CASH</span><b id="cashNum">0</b></div>
+      <div class="stat score"><span>SCORE</span><b id="scoreNum">0</b></div>
+    </div>
+
+    <div id="minimapWrap">
+      <div class="mm-head"><span>ERANGEL</span><b>SECTOR 7</b></div>
+      <canvas id="minimap" width="220" height="220"></canvas>
+      <div class="mm-foot"><span id="mmKills">0 KILLS</span><span id="mmTime">00:00</span></div>
+    </div>
+
+    <div id="killFeed"></div>
+    <div id="dmgLayer"></div>
+
+    <div id="crosshair">
+      <span class="ch ch-t"></span><span class="ch ch-b"></span><span class="ch ch-l"></span><span class="ch ch-r"></span><span class="ch-dot"></span>
+    </div>
+    <div id="hitMarker">✕</div>
+
+    <div id="damageDir"><span class="dd-arrow"></span></div>
+    <div id="vignette"></div>
+    <div id="lowHp"></div>
+
+    <div class="hud-bottom">
+      <div id="weaponSlots"></div>
+      <div id="weaponName">P1911</div>
+      <div id="ammoLine"><b id="ammoCount">12</b><span class="slash">/</span><span id="ammoMax">12</span><span id="ammoReserve">∞</span></div>
+      <div id="reloadBar" class="hidden"><div id="reloadFill"></div></div>
+      <div class="consumables">
+        <div class="consumable"><span>💣</span><b id="grenadeCount">3</b></div>
+        <div class="consumable"><span>🩹</span><b id="medkitCount">2</b></div>
+        <div class="consumable"><span>🛡️</span><b id="plateCount">1</b></div>
+      </div>
+    </div>
+
+    <div id="lootPrompt" class="hidden"></div>
+    <div id="waveAnnounce" class="hidden"><span id="waveMain">WAVE 1</span><small id="waveSub">HOLD THE LINE</small></div>
+    <div id="streakBanner" class="hidden"></div>
+    <div id="toast"></div>
+    <div id="bossBar" class="hidden"><div id="bossFill"></div><span id="bossLabel">BOSS</span></div>
+    <div id="objective">🎯 Eliminate every hostile · Loot the compound · Survive</div>
+
+    <div id="touchLayer">
+      <div id="lookPad"></div>
+      <div id="stickBase"><div id="stickKnob"></div></div>
+      <button class="tbtn fire" id="btnFire">FIRE</button>
+      <button class="tbtn" id="btnAds">ADS</button>
+      <button class="tbtn" id="btnReload">⟳</button>
+      <button class="tbtn" id="btnJump">JUMP</button>
+      <button class="tbtn" id="btnCrouch">CRCH</button>
+      <button class="tbtn" id="btnInteract">USE</button>
+      <button class="tbtn" id="btnMedkit">MED</button>
+      <button class="tbtn" id="btnGrenade">NADE</button>
+      <button class="tbtn pause" id="btnPause">II</button>
+    </div>
+
+    <div id="controlsHint">
+      <div><kbd>WASD</kbd> Move</div>
+      <div><kbd>RMB</kbd> Aim</div>
+      <div><kbd>R</kbd> Reload</div>
+      <div><kbd>E</kbd> Loot</div>
+      <div><kbd>G</kbd> Nade</div>
+      <div><kbd>H</kbd> Heal</div>
+    </div>
+  </div>
+
+  <!-- ══════════════ SCOPE OVERLAY (below HUD, above the 3D scene) ══════════════ -->
+  <div id="scope" class="hidden">
+    <div class="scope-ring"></div>
+    <div class="scope-line scope-v"></div>
+    <div class="scope-line scope-h"></div>
+    <div class="scope-rangefinder" id="scopeZoom">8×</div>
+  </div>
+
+  <!-- ══════════════ SHOP ══════════════ -->
+  <div id="shop" class="screen shop-screen hidden">
+    <div class="shop-wrap">
+      <header class="shop-head">
+        <div>
+          <div class="eyebrow"><span class="pulse-dot"></span> WAVE <span id="shopWave">1</span> CLEARED</div>
+          <h2>BLACK MARKET</h2>
+          <p>Spend your combat cash. Stock refreshes next wave.</p>
+        </div>
+        <div class="shop-cash"><small>AVAILABLE</small><b>💰 $<span id="shopCash">0</span></b></div>
+      </header>
+      <div class="shop-tabs">
+        <button class="shop-tab active" data-tab="supplies">SUPPLIES</button>
+        <button class="shop-tab" data-tab="weapons">WEAPONS</button>
+        <button class="shop-tab" data-tab="upgrades">UPGRADES</button>
+      </div>
+      <div id="shopItems" class="shop-items"></div>
+      <footer class="shop-foot">
+        <div class="shop-hint">💡 Medkits, armour plates and ammo carry into the next wave.</div>
+        <button id="nextWaveBtn" class="btn primary">DEPLOY NEXT WAVE <span>▶</span></button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ══════════════ PAUSE ══════════════ -->
+  <div id="pause" class="screen pause-screen hidden">
+    <div class="panel narrow">
+      <div class="eyebrow">TACTICAL PAUSE</div>
+      <h2>HOLD POSITION</h2>
+      <p class="muted">Click resume to re-enter the arena. Your mouse will be captured again.</p>
+      <div class="pause-stats">
+        <div><b id="pauseWave">1</b><small>WAVE</small></div>
+        <div><b id="pauseKills">0</b><small>KILLS</small></div>
+        <div><b id="pauseScore">0</b><small>SCORE</small></div>
+      </div>
+      <button id="resumeBtn" class="btn primary">RESUME</button>
+      <button id="pauseRestartBtn" class="btn ghost">RESTART RUN</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ GAME OVER ══════════════ -->
+  <div id="gameOver" class="screen over-screen hidden">
+    <div class="panel over-panel">
+      <div class="eyebrow danger">MISSION FAILED</div>
+      <h2>YOU WERE ELIMINATED</h2>
+      <p id="goSub" class="muted">The arena claims another operator.</p>
+      <div id="recordBanner" class="record hidden">★ NEW PERSONAL RECORD ★</div>
+      <div class="over-grid">
+        <div><b id="goKills">0</b><small>KILLS</small></div>
+        <div><b id="goWave">0</b><small>WAVES</small></div>
+        <div><b id="goScore">0</b><small>SCORE</small></div>
+        <div><b id="goAcc">0%</b><small>ACCURACY</small></div>
+        <div><b id="goHead">0</b><small>HEADSHOTS</small></div>
+        <div><b id="goTime">0:00</b><small>SURVIVED</small></div>
+      </div>
+      <button id="restartBtn" class="btn primary">RUN IT BACK <span>⟳</span></button>
+      <button id="menuBtn" class="btn ghost">MAIN MENU</button>
+    </div>
+  </div>
+
+  <script src="vendor/three.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
